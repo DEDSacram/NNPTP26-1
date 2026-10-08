@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using NNPTPZ1.Mathematics;
 
-namespace NNPTPZ1
+namespace NNPTPZ1.Cli
 {
     public class PolynomialParser
     {

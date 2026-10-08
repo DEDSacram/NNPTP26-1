@@ -1,5 +1,5 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NNPTPZ1;
+using NNPTPZ1.Cli;
 
 namespace NNPTPZ1.Tests
 {

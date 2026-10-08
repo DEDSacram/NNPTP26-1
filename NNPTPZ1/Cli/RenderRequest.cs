@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 
-namespace NNPTPZ1
+namespace NNPTPZ1.Cli
 {
     class RenderRequest
     {

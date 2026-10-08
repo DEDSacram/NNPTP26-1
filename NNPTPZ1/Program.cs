@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using NNPTPZ1.Cli;
 using NNPTPZ1.Mathematics;
 
 namespace NNPTPZ1

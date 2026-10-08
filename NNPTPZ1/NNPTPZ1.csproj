@@ -46,10 +46,10 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="FractalRenderer.cs" />
-    <Compile Include="RenderRequest.cs" />
-    <Compile Include="PolynomialParser.cs" />
-    <Compile Include="Polynomial.cs" />
-    <Compile Include="ComplexNumber.cs" />
+    <Compile Include="Cli\RenderRequest.cs" />
+    <Compile Include="Cli\PolynomialParser.cs" />
+    <Compile Include="Mathematics\Polynomial.cs" />
+    <Compile Include="Mathematics\ComplexNumber.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

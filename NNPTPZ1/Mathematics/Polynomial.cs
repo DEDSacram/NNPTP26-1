@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using NNPTPZ1;
+using NNPTPZ1.Cli;
 
 namespace NNPTPZ1.Mathematics
 {
