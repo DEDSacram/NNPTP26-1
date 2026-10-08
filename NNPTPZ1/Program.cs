@@ -16,31 +16,34 @@ namespace NNPTPZ1
         {
             int width = int.Parse(args[0]);
             int height = int.Parse(args[1]);
-            double xmin = double.Parse(args[2]);
-            double xmax = double.Parse(args[3]);
-            double ymin = double.Parse(args[4]);
-            double ymax = double.Parse(args[5]);
+            double minX = double.Parse(args[2]);
+            double maxX = double.Parse(args[3]);
+            double minY = double.Parse(args[4]);
+            double maxY = double.Parse(args[5]);
             string output = args[6];
 
-            Poly polynomial = CreatePolynomial(
-                new Cplx { Re = 1 }, Cplx.Zero, Cplx.Zero, new Cplx { Re = 1 });
+            Polynomial polynomial = CreatePolynomial(
+                new ComplexNumber { Real = 1 },
+                ComplexNumber.Zero,
+                ComplexNumber.Zero,
+                new ComplexNumber { Real = 1 });
 
             Console.WriteLine(polynomial);
             Console.WriteLine(polynomial.Derive());
 
             FractalRenderer renderer = new FractalRenderer(polynomial);
 
-            using (Bitmap image = renderer.Render(width, height, xmin, xmax, ymin, ymax))
+            using (Bitmap image = renderer.Render(width, height, minX, maxX, minY, maxY))
             {
                 image.Save(output ?? DefaultOutputPath);
             }
         }
 
-        private static Poly CreatePolynomial(params Cplx[] coefficients)
+        private static Polynomial CreatePolynomial(params ComplexNumber[] coefficients)
         {
-            Poly polynomial = new Poly();
+            Polynomial polynomial = new Polynomial();
 
-            foreach (Cplx coefficient in coefficients)
+            foreach (ComplexNumber coefficient in coefficients)
             {
                 polynomial.Add(coefficient);
             }

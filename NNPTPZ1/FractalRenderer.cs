@@ -18,15 +18,15 @@ namespace NNPTPZ1
             Color.Fuchsia, Color.Gold, Color.Cyan, Color.Magenta
         };
 
-        private readonly Poly polynomial;
-        private readonly Poly derivative;
-        private readonly List<Cplx> roots = new List<Cplx>();
+        private readonly Polynomial polynomial;
+        private readonly Polynomial derivative;
+        private readonly List<ComplexNumber> roots = new List<ComplexNumber>();
         private readonly int maxNewtonIterations;
         private readonly double rootMatchTolerance;
         private readonly int shadeStepPerIteration;
         private readonly double zeroOffset;
 
-        public FractalRenderer(Poly polynomial,
+        public FractalRenderer(Polynomial polynomial,
             int maxNewtonIterations = MaxNewtonIterations,
             double rootMatchTolerance = RootMatchTolerance,
             int shadeStepPerIteration = ShadeStepPerIteration,
@@ -41,55 +41,55 @@ namespace NNPTPZ1
         }
 
         public Bitmap Render(int width, int height,
-            double xmin, double xmax, double ymin, double ymax)
+            double minX, double maxX, double minY, double maxY)
         {
-            double xstep = (xmax - xmin) / width;
-            double ystep = (ymax - ymin) / height;
+            double xStep = (maxX - minX) / width;
+            double yStep = (maxY - minY) / height;
             Bitmap image = new Bitmap(width, height);
 
-            for (int i = 0; i < height; i++)
+            for (int row = 0; row < height; row++)
             {
-                for (int j = 0; j < width; j++)
+                for (int column = 0; column < width; column++)
                 {
-                    Cplx start = CreateComplexPoint(xmin + j * xstep, ymin + i * ystep);
+                    ComplexNumber start = CreateComplexPoint(minX + column * xStep, minY + row * yStep);
 
                     int iterations;
-                    Cplx root = RefineToRoot(start, out iterations);
+                    ComplexNumber root = RefineToRoot(start, out iterations);
 
                     int rootIndex = RegisterRoot(root);
 
-                    image.SetPixel(j, i, ShadeColour(Colors[rootIndex % Colors.Length], iterations));
+                    image.SetPixel(column, row, ShadeColour(Colors[rootIndex % Colors.Length], iterations));
                 }
             }
 
             return image;
         }
 
-        private Cplx CreateComplexPoint(double x, double y)
+        private ComplexNumber CreateComplexPoint(double x, double y)
         {
-            Cplx point = new Cplx { Re = x, Imaginari = (float)y };
+            ComplexNumber point = new ComplexNumber { Real = x, Imaginary = (float)y };
 
-            if (point.Re == 0)
+            if (point.Real == 0)
             {
-                point.Re = zeroOffset;
+                point.Real = zeroOffset;
             }
 
-            if (point.Imaginari == 0)
+            if (point.Imaginary == 0)
             {
-                point.Imaginari = (float)zeroOffset;
+                point.Imaginary = (float)zeroOffset;
             }
 
             return point;
         }
 
-        private Cplx RefineToRoot(Cplx start, out int iterations)
+        private ComplexNumber RefineToRoot(ComplexNumber start, out int iterations)
         {
-            Cplx point = start;
+            ComplexNumber point = start;
             iterations = 0;
 
             for (int step = 0; step < maxNewtonIterations; step++)
             {
-                Cplx difference = polynomial.Eval(point).Divide(derivative.Eval(point));
+                ComplexNumber difference = polynomial.Eval(point).Divide(derivative.Eval(point));
                 point = point.Subtract(difference);
                 iterations++;
             }
@@ -97,7 +97,7 @@ namespace NNPTPZ1
             return point;
         }
 
-        private int RegisterRoot(Cplx point)
+        private int RegisterRoot(ComplexNumber point)
         {
             int match = -1;
 
@@ -133,10 +133,10 @@ namespace NNPTPZ1
             return Math.Min(Math.Max(0, channel), 255);
         }
 
-        private static double SquaredDistance(Cplx left, Cplx right)
+        private static double SquaredDistance(ComplexNumber left, ComplexNumber right)
         {
-            double realDifference = left.Re - right.Re;
-            double imaginaryDifference = left.Imaginari - right.Imaginari;
+            double realDifference = left.Real - right.Real;
+            double imaginaryDifference = left.Imaginary - right.Imaginary;
 
             return realDifference * realDifference + imaginaryDifference * imaginaryDifference;
         }
