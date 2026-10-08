@@ -67,7 +67,7 @@ namespace NNPTPZ1
 
         private ComplexNumber CreateComplexPoint(double x, double y)
         {
-            ComplexNumber point = new ComplexNumber { Real = x, Imaginary = (float)y };
+            ComplexNumber point = new ComplexNumber { Real = x, Imaginary = y };
 
             if (point.Real == 0)
             {
@@ -76,7 +76,7 @@ namespace NNPTPZ1
 
             if (point.Imaginary == 0)
             {
-                point.Imaginary = (float)zeroOffset;
+                point.Imaginary = zeroOffset;
             }
 
             return point;
