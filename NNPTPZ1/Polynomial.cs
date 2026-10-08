@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using NNPTPZ1;
 
 namespace NNPTPZ1.Mathematics
 {
@@ -16,6 +17,19 @@ namespace NNPTPZ1.Mathematics
 
         public void Add(ComplexNumber coefficient) =>
             Coefficients.Add(coefficient);
+
+        /// <summary>
+        /// Reads a polynomial from text, so callers do not have to supply
+        /// the coefficients one by one.
+        /// </summary>
+        /// <param name="text">for example "x^5 - 1"</param>
+        /// <param name="polynomial">parsed polynomial</param>
+        /// <param name="error">why parsing failed</param>
+        /// <returns>true when the text is a valid polynomial</returns>
+        public static bool TryParse(string text, out Polynomial polynomial, out string error)
+        {
+            return PolynomialParser.TryParse(text, out polynomial, out error);
+        }
 
         /// <summary>
         /// Derives this polynomial and creates new one
