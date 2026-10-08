@@ -25,7 +25,6 @@ namespace NNPTPZ1
             Polynomial polynomial = CreatePolynomial(
                 new ComplexNumber { Real = 1 },
                 ComplexNumber.Zero,
-                ComplexNumber.Zero,
                 new ComplexNumber { Real = 1 });
 
             Console.WriteLine(polynomial);

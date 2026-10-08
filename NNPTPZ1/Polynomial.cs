@@ -72,10 +72,25 @@ namespace NNPTPZ1.Mathematics
                     text += " + ";
                 }
 
-                text += Coefficients[power] + new string('x', power);
+                text += Coefficients[power] + PowerSymbol(power);
             }
 
             return text;
+        }
+
+        private static string PowerSymbol(int power)
+        {
+            if (power == 0)
+            {
+                return "";
+            }
+
+            if (power == 1)
+            {
+                return "x";
+            }
+
+            return "x^" + power;
         }
 
         private ComplexNumber Term(int power, ComplexNumber x)

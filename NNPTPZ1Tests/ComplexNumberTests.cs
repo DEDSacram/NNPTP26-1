@@ -76,7 +76,7 @@ namespace NNPTPZ1.Mathematics.Tests
             Assert.AreEqual(expected, result);
 
             var r2 = polynomial.ToString();
-            var e2 = "(1 + 0i) + (0 + 0i)x + (1 + 0i)xx";
+            var e2 = "(1 + 0i) + (0 + 0i)x + (1 + 0i)x^2";
             Assert.AreEqual(e2, r2);
         }
     }
