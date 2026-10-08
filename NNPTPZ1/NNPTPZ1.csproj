@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="FractalRenderer.cs" />
+    <Compile Include="RenderRequest.cs" />
     <Compile Include="Polynomial.cs" />
     <Compile Include="ComplexNumber.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

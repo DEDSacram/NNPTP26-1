@@ -10,18 +10,37 @@ namespace NNPTPZ1
     /// </summary>
     class Program
     {
-        private const string DefaultOutputPath = "../../../out.png";
+        private const int Success = 0;
+        private const int BadArguments = 1;
+        private const int RenderFailed = 2;
 
-        static void Main(string[] args)
+        static int Main(string[] args)
         {
-            int width = int.Parse(args[0]);
-            int height = int.Parse(args[1]);
-            double minX = double.Parse(args[2]);
-            double maxX = double.Parse(args[3]);
-            double minY = double.Parse(args[4]);
-            double maxY = double.Parse(args[5]);
-            string output = args[6];
+            RenderRequest request;
+            string problem;
 
+            if (!RenderRequest.TryParse(args, out request, out problem))
+            {
+                ReportProblem(problem);
+                return BadArguments;
+            }
+
+            try
+            {
+                Draw(request);
+            }
+            catch (Exception failure)
+            {
+                Console.Error.WriteLine("Cannot write the image to '" + request.OutputPath + "'.");
+                Console.Error.WriteLine(failure.Message);
+                return RenderFailed;
+            }
+
+            return Success;
+        }
+
+        private static void Draw(RenderRequest request)
+        {
             Polynomial polynomial = CreatePolynomial(
                 new ComplexNumber { Real = 1 },
                 ComplexNumber.Zero,
@@ -32,10 +51,18 @@ namespace NNPTPZ1
 
             FractalRenderer renderer = new FractalRenderer(polynomial);
 
-            using (Bitmap image = renderer.Render(width, height, minX, maxX, minY, maxY))
+            using (Bitmap image = renderer.Render(request.Width, request.Height,
+                request.MinX, request.MaxX, request.MinY, request.MaxY))
             {
-                image.Save(output ?? DefaultOutputPath);
+                image.Save(request.OutputPath);
             }
+        }
+
+        private static void ReportProblem(string problem)
+        {
+            Console.Error.WriteLine("Error: " + problem);
+            Console.Error.WriteLine();
+            Console.Error.WriteLine(RenderRequest.Help);
         }
 
         private static Polynomial CreatePolynomial(params ComplexNumber[] coefficients)
